@@ -1,0 +1,24 @@
+{
+  "name": "entradasatualcance-test",
+  "homepage": "https://github.com/ljorda-alcoitec/entradasatualcance-test",
+  "authors": [
+    "Lucía Jordá Hernández <ljorda@alcoitec.es>"
+  ],
+  "description": "Prueba entradas a tu alcance",
+  "main": "",
+  "keywords": [
+    "prueba",
+    "desarrollo",
+    "angularjs",
+    "html5",
+    "css3"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
