@@ -19,11 +19,21 @@ angular.module('eventos', ['ui.router', 'ngResource','eventos.controllers', 'eve
 		}
 	});
 
-	$stateProvider.state('eventos', {
-		url:'/evento/:id/',
+	$stateProvider.state('eventoNumerado', {
+		url:'/evento/:id/numerado/',
 		views: {
 			'content': {
-				templateUrl : 'templates/evento.html',
+				templateUrl : 'templates/eventoNumerado.html',
+				controller  : 'EventoController'
+			}
+		}
+	});
+
+	$stateProvider.state('eventoNoNumerado', {
+		url:'/evento/:id/no-numerado/',
+		views: {
+			'content': {
+				templateUrl : 'templates/eventoNoNumerado.html',
 				controller  : 'EventoController'
 			}
 		}

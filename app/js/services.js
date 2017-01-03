@@ -9,6 +9,7 @@ angular.module('eventos.services', ['ngResource'])
 	function($http, baseURL){
 		
 		var tokenFactory = {};
+		tokenFactory.access_token = '';
 		tokenFactory.refresh_token = '';
 
 
@@ -16,34 +17,28 @@ angular.module('eventos.services', ['ngResource'])
 			return tokenFactory.refresh_token !== '';
 		};
 
-		/*
-		var refresh_token = $rootScope.refresh_token;
-
-		if(refresh_token !== null){
-			// Llamar a refresh, y guardamos access_token y refresh_token en rootscope
-			//var datosSesion = $resource(baseURL + "oauth/refresh");
-
-			//$rootScope.refresh_token = 	datosSesion.refresh_token;
-			//$rootScope.access_token = 	datosSesion.access_token;
-			return;
-		}
-		*/
 		
-		tokenFactory.getSession = function(callBackOk, callBackError){
+		tokenFactory.getSession = function(callBackFunction){
 			
 			if(tokenFactory.hasSession()){
-				var encodedString = 'username=' +
-            					encodeURIComponent('lucia') +
-            					'&password=' +
-            					encodeURIComponent('Prue4ba16');
+				var encodedString = 'refresh_token=' +
+            					encodeURIComponent(tokenFactory.refresh_token);
 
-				return $http.post(baseURL+'oauth/token/refresh', 
+				$http.post(baseURL+'oauth/token/refresh', 
 						encodedString,
 						{
 							'headers': { 
 								"content-type": "application/x-www-form-urlencoded",
 							}
-						});
+						}).then(
+				function(responseOk){
+					tokenFactory.access_token = responseOk.data.access_token;
+					tokenFactory.refresh_token = responseOk.data.refresh_token;
+					callBackFunction();
+				},
+				function(responseError){
+
+				});
 			}
 			
 			var encodedString = 'username=' +
@@ -51,13 +46,21 @@ angular.module('eventos.services', ['ngResource'])
             					'&password=' +
             					encodeURIComponent('Prue4ba16');
 
-			return $http.post(baseURL+'oauth/token/user', 
+			$http.post(baseURL+'oauth/token/user', 
 						encodedString,
 						{
 							'headers': { 
 								"content-type": "application/x-www-form-urlencoded",
 							}
-						});
+						}).then(
+				function(responseOk){
+					tokenFactory.access_token = responseOk.data.access_token;
+					tokenFactory.refresh_token = responseOk.data.refresh_token;
+					callBackFunction();
+				},
+				function(responseError){
+
+				});
 		}
 
 		return tokenFactory;
@@ -72,8 +75,8 @@ angular.module('eventos.services', ['ngResource'])
 
 		var eventosFactory = {};
 
-		eventosFactory.getEventos = function(access_token){
-			return $resource(baseURL+'events?access_token=' + access_token);
+		eventosFactory.getEventos = function(){
+			return $resource(baseURL+'events?access_token=' + tokenFactory.access_token);
 		}
 
 		return eventosFactory;

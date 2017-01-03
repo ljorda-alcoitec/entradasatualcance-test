@@ -5,28 +5,31 @@ angular.module('eventos.controllers', [])
 		['$scope', 'tokenFactory', 'eventosFactory', 
 		function($scope, tokenFactory, eventosFactory){
 
-			// Pedimos el token.
-			tokenFactory.getSession().then(
-				function(responseOk){
-					// cuando tenemos el token
-					// llamamos a pedir eventos
-					pedirEventos(responseOk.data.access_token);
-				},
-				function(responseError){
+			// Negociamos la sesion, y ejecutamos loadEventos como callback.
+			tokenFactory.getSession(loadEventos);
 
-				}
-
-			);
-
-			function pedirEventos(access_token){
-				eventosFactory.getEventos(access_token).query(
+			function loadEventos(){
+				eventosFactory.getEventos().query(
 					function(response){
                     	$scope.listaEventos = response;
                 	},
                 	function(response){
                 	}
                 );
+			};
+
+			$scope.getUrlDetalle = function(evento){
+				console.log(evento);
+				if(evento.numbered === true){
+					return "#/evento/" + evento.id + "/numerado/";
+				}
+				return "#/evento/" + evento.id + "/no-numerado/";
+
 			}
+
+	}])
+
+	.controller('EventoController', ['$scope', '$stateParams', function($scope, $stateParams){
 
 	}])
 
