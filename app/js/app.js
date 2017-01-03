@@ -1,11 +1,10 @@
-'use strict';
+
 
 angular.module('eventos', ['ui.router', 'ngResource','eventos.controllers', 'eventos.services'])
 .config(function($stateProvider, $urlRouterProvider) {
-	$stateProvider
 
-	.state('app', {
-		url:'/',
+	$stateProvider.state('app', {
+		url:'/eventos/',
 		views: {
 			'header': {
 				templateUrl : 'templates/header.html',
@@ -18,8 +17,18 @@ angular.module('eventos', ['ui.router', 'ngResource','eventos.controllers', 'eve
 				templateUrl : 'templates/footer.html',
 			}
 		}
-	})
+	});
 
-	$urlRouterProvider.otherwise('/');
+	$stateProvider.state('eventos', {
+		url:'/evento/:id/',
+		views: {
+			'content': {
+				templateUrl : 'templates/evento.html',
+				controller  : 'EventoController'
+			}
+		}
+	});
+
+	$urlRouterProvider.otherwise('/eventos/');
 })
 ;
