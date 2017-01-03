@@ -19,7 +19,6 @@ angular.module('eventos.controllers', [])
 			};
 
 			$scope.getUrlDetalle = function(evento){
-				console.log(evento);
 				if(evento.numbered === true){
 					return "#/evento/" + evento.id + "/numerado/";
 				}
