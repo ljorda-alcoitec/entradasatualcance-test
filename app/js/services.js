@@ -18,13 +18,13 @@ angular.module('eventos.services', ['ngResource'])
 		};
 
 		
-		tokenFactory.getSession = function(callBackFunction){
+		tokenFactory.getSessionAndCall = function(callback1, callback2){
 			
 			if(tokenFactory.hasSession()){
 				var encodedString = 'refresh_token=' +
             					encodeURIComponent(tokenFactory.refresh_token);
 
-				$http.post(baseURL+'oauth/token/refresh', 
+				$http.post(baseURL+'oauth/refresh', 
 						encodedString,
 						{
 							'headers': { 
@@ -34,11 +34,12 @@ angular.module('eventos.services', ['ngResource'])
 				function(responseOk){
 					tokenFactory.access_token = responseOk.data.access_token;
 					tokenFactory.refresh_token = responseOk.data.refresh_token;
-					callBackFunction();
+					tokenFactory.doCallBack(callback1, callback2);
 				},
 				function(responseError){
 
 				});
+				return;
 			}
 			
 			var encodedString = 'username=' +
@@ -56,11 +57,20 @@ angular.module('eventos.services', ['ngResource'])
 				function(responseOk){
 					tokenFactory.access_token = responseOk.data.access_token;
 					tokenFactory.refresh_token = responseOk.data.refresh_token;
-					callBackFunction();
+					tokenFactory.doCallBack(callback1, callback2);
 				},
 				function(responseError){
 
 				});
+		}
+
+		tokenFactory.doCallBack = function(callback1, callback2){
+			if(angular.isFunction(callback1)){
+				callback1();
+			}
+			if(angular.isFunction(callback2)){
+				callback2();
+			}
 		}
 
 		return tokenFactory;
@@ -70,13 +80,22 @@ angular.module('eventos.services', ['ngResource'])
 
 
 .factory('eventosFactory', 
-	['$resource', 'baseURL', 'tokenFactory',
-	function($resource, baseURL, tokenFactory){
+	['$http', 'baseURL', 'tokenFactory',
+	function($http, baseURL, tokenFactory){
 
 		var eventosFactory = {};
 
 		eventosFactory.getEventos = function(){
-			return $resource(baseURL+'events?access_token=' + tokenFactory.access_token);
+			return $http.get(baseURL+'events?access_token=' + tokenFactory.access_token);
+		}
+
+		//Obtener detalles eventos
+		eventosFactory.getEvento = function(id){
+			return $http.get(baseURL+'events/'+id +'?access_token=' + tokenFactory.access_token);
+		}
+
+		eventosFactory.getTicketsEvento = function(id){
+			return $http.get(baseURL+'events/'+id +'/tickets?access_token=' + tokenFactory.access_token);
 		}
 
 		return eventosFactory;

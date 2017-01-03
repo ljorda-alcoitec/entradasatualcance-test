@@ -1,0 +1,14 @@
+@media (min-width: 768px){
+	.ancho-contenedor-evento{
+		height: 116px;
+	}
+	
+	.borde-separacion{
+		border-bottom: 1px  dotted black;
+	}
+
+	.centrado-boton-compra-evento{
+		margin-top: 40px;
+    	margin-left: 15px;
+	}
+}

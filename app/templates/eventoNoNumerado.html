@@ -1,1 +1,32 @@
-eventoNoNumerado
+<div class="container">
+	<div class="row row-content">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-10">
+			<div class="row">
+				<div class="col-xs-12">
+					<img src="img/evento1.jpg" alt="Evento 1" class="img-responsive img-thumbnail">
+				</div>
+				<div class="col-xs-12" >
+					<h1>{{evento.name}}</h1>
+					<p>{{evento.date | date:'dd/MM/yyyy'}}</p>
+					<p>{{evento.description}}</p>
+				</div>
+				<div class="col-xs-12 borde-separacion">
+					<h3>Elige tu entrada:</h3>
+				</div>
+				<div class="row" ng-repeat="ticket in ticketsEvento">
+					<div class="col-xs-12 col-sm-10 ancho-contenedor-evento borde-separacion">
+						<h3>{{ticket.name}}</h3>
+						<p>{{ticket.description}}</p>
+						<p>{{ticket.price}} €</p>
+					</div>
+					<div class="col-xm-12 col-sm-2 ancho-contenedor-evento borde-separacion">
+	  					<a data-toggle="modal" data-target="#compraEntradas" class="btn btn-primary centrado-boton-compra-evento">
+							<span class="glyphicon glyphicon-shopping-cart"></span>Comprar 
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

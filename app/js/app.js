@@ -24,7 +24,7 @@ angular.module('eventos', ['ui.router', 'ngResource','eventos.controllers', 'eve
 		views: {
 			'content': {
 				templateUrl : 'templates/eventoNumerado.html',
-				controller  : 'EventoController'
+				controller  : 'EventoNumeradoController'
 			}
 		}
 	});
@@ -34,7 +34,7 @@ angular.module('eventos', ['ui.router', 'ngResource','eventos.controllers', 'eve
 		views: {
 			'content': {
 				templateUrl : 'templates/eventoNoNumerado.html',
-				controller  : 'EventoController'
+				controller  : 'EventoNoNumeradoController'
 			}
 		}
 	});
