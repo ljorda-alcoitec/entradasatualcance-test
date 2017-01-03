@@ -1,0 +1,10 @@
+.color-blanco{
+	color: #fff;
+}
+
+a.enlace-sin-linea{
+	text-decoration:none;   
+}
+.espacio-div-inferior{
+  margin-bottom: 30px;
+}
