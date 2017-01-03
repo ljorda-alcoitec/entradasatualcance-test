@@ -18,7 +18,7 @@ angular.module('eventos.services', ['ngResource'])
 		};
 
 		
-		tokenFactory.getSessionAndCall = function(callback1, callback2){
+		tokenFactory.getSessionAndCall = function(callback){
 			
 			if(tokenFactory.hasSession()){
 				var encodedString = 'refresh_token=' +
@@ -34,7 +34,7 @@ angular.module('eventos.services', ['ngResource'])
 				function(responseOk){
 					tokenFactory.access_token = responseOk.data.access_token;
 					tokenFactory.refresh_token = responseOk.data.refresh_token;
-					tokenFactory.doCallBack(callback1, callback2);
+					callback();
 				},
 				function(responseError){
 
@@ -57,20 +57,11 @@ angular.module('eventos.services', ['ngResource'])
 				function(responseOk){
 					tokenFactory.access_token = responseOk.data.access_token;
 					tokenFactory.refresh_token = responseOk.data.refresh_token;
-					tokenFactory.doCallBack(callback1, callback2);
+					callback();
 				},
 				function(responseError){
 
 				});
-		}
-
-		tokenFactory.doCallBack = function(callback1, callback2){
-			if(angular.isFunction(callback1)){
-				callback1();
-			}
-			if(angular.isFunction(callback2)){
-				callback2();
-			}
 		}
 
 		return tokenFactory;

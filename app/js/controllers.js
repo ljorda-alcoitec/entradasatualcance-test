@@ -32,7 +32,12 @@ angular.module('eventos.controllers', [])
 		['$scope', '$stateParams','tokenFactory','eventosFactory', 
 		function($scope, $stateParams, tokenFactory, eventosFactory){
 
-			tokenFactory.getSessionAndCall(loadTickets, loadEvento);
+			tokenFactory.getSessionAndCall(cargarDatosEventoNoNumerado);
+
+			function cargarDatosEventoNoNumerado(){
+				loadEvento();
+				loadTickets();
+			}
 				
 			function loadEvento(){
 				eventosFactory.getEvento(parseInt($stateParams.id,10)).then(
