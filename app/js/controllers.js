@@ -1,5 +1,5 @@
 
-angular.module('eventos.controllers', [])
+angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 
 	.controller('HomeController', 
 		['$scope', 'tokenFactory', 'eventosFactory', 
@@ -29,8 +29,8 @@ angular.module('eventos.controllers', [])
 	}])
 
 	.controller('EventoNoNumeradoController', 
-		['$scope', '$stateParams','tokenFactory','eventosFactory', 
-		function($scope, $stateParams, tokenFactory, eventosFactory){
+		['$scope', '$stateParams','$uibModal','$log', '$document', 'tokenFactory','eventosFactory', 
+		function($scope, $stateParams, $uibModal, $log, $document, tokenFactory, eventosFactory){
 
 			tokenFactory.getSessionAndCall(cargarDatosEventoNoNumerado);
 
@@ -58,7 +58,46 @@ angular.module('eventos.controllers', [])
 
 					});
 			}
+
+			$scope.open = function(evento){
+				var modalInstance =	$uibModal.open({
+					templateUrl:'templates/seleccionEntradas.html',
+					controller : 'SeleccionEntradasController',
+					size: 'lg',
+					resolve: {
+						evento: function(){
+							return evento;
+						}
+					}
+				});
+			}
 	}])
+
+	.controller('SeleccionEntradasController', 
+		['$scope','$uibModalInstance', 'evento',
+		function($scope, $uibModalInstance, evento){
+			$scope.evento = evento;
+			console.log($scope.evento);
+
+			$scope.range = function(min, max, step) {
+				   step = step || 1;
+				   var input = [];
+				   for (var i = min; i <= max; i += step) {
+				       input.push(i);
+				   }
+				   return input;
+				};
+
+			$scope.cancel = function(){
+				$uibModalInstance.dismiss('cancel');
+			}
+
+			$scope.finalizarCompra = function () {
+    			$uibModalInstance.close();
+    		};
+
+	
+		}])
 
 	.controller('EventoNumeradoController', 
 		['$scope', '$stateParams','tokenFactory','eventosFactory', 

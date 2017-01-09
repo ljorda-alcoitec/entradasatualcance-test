@@ -21,12 +21,17 @@
 						<p>{{ticket.price}} €</p>
 					</div>
 					<div class="col-xm-12 col-sm-2 ancho-contenedor-evento borde-separacion">
-	  					<a data-toggle="modal" data-target="#compraEntradas" class="btn btn-primary centrado-boton-compra-evento">
+					<!--data-toggle="modal" data-target="#compraEntradas" -->
+
+	  					<a ng-click="open(ticket)" class="btn btn-primary centrado-boton-compra-evento">
 							<span class="glyphicon glyphicon-shopping-cart"></span>Comprar 
 						</a>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+

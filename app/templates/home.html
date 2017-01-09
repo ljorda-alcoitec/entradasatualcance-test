@@ -13,7 +13,7 @@
 			    			<p class="card-text"><i class ="fa fa-calendar" aria-hidden="true"></i> {{evento.date | date:'dd/MM/yyyy'}}</p>
 			    			<p class="card-text"><i class ="fa fa-clock-o" aria-hidden="true"></i> {{evento.date | date:'HH:mm'}} </p>
 			    			<p>{{evento.description}}</p>
-			    			<a href="#"" class="btn btn-primary">
+			    			<a href="{{getUrlDetalle(evento)}}" class="btn btn-primary">
 								<span class="glyphicon glyphicon-shopping-cart"></span> Comprar
 							</a>
 			  			</div>
