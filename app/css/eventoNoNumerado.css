@@ -1,3 +1,7 @@
+.margen-separacion-breadcrumb{
+	margin-top: 20px;
+}
+
 @media (min-width: 768px){
 	.ancho-contenedor-evento{
 		height: 116px;
