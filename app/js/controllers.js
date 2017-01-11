@@ -24,7 +24,7 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 				}
 				return "#/evento/" + evento.id + "/no-numerado/";
 
-			}
+			};
 
 	}])
 
@@ -70,7 +70,7 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 						}
 					}
 				});
-			}
+			};
 	}])
 
 	.controller('SeleccionEntradasController', 
@@ -96,6 +96,12 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
     			$uibModalInstance.close();
     		};
 
+    		$scope.submitForm= function(){
+    			if($scope.validationForm.$valid){
+    				alert('falta algo');
+    			}
+    		}
+
 	
 		}])
 
@@ -103,7 +109,7 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 		['$scope', '$stateParams','tokenFactory','eventosFactory', 
 		function($scope, $stateParams, tokenFactory, eventosFactory){
 
-			tokenFactory.getSessionAndCall();
+		/*	tokenFactory.getSessionAndCall();
 				
 			function loadEvento(){
 				eventosFactory.getEvento(parseInt($stateParams.id,10)).then(
@@ -113,7 +119,7 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 					function(responseError){
 
 					});
-			}
+			}*/
 
 			
 

@@ -4,38 +4,39 @@
     <h4 class="modal-title">Selección entradas</h4>
 </div>
 <div class="modal-body">
-    <form class="form-horizontal"> 
-               <div class=" form-group">
-            		<label for="selectorEntradas" class="col-sm-2 control-label">Entradas </label>
-            		<div class="col-sm-10">
-                		<select class="form-control" id="selectorEntradas">
-                			<option ng-repeat="numeroEntradas in range(evento.minimum, evento.maximum)">{{numeroEntradas}}</option>
-                		</select>
-            		</div>
-            	</div>
-                <div class=" form-group">
-                    <label for="nombre" class="col-sm-2 control-label">Nombre</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Escribe aquí tu nombre" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">Email</label>
-                    <div class="col-sm-10">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Escribe aquí tu email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="telefono" class="col-sm-2 control-label">Teléfono</label>
-                    <div class="col-sm-10">
-                        <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Escribe aquí tu telefono">
-                    </div>
-                </div>
+   <form class="form-horizontal" name="validateForm" ng-submit="submitForm()">
+        <div class=" form-group">
+    		<label for="selectorEntradas" class="col-sm-2 control-label">Entradas </label>
+    		<div class="col-sm-10">
+        		<select class="form-control" id="selectorEntradas">
+        			<option ng-repeat="numeroEntradas in range(evento.minimum, evento.maximum)">{{numeroEntradas}}</option>
+        		</select>
+    		</div>
+    	</div>
+        <div class="form-group" ng-class="{ 'has-error' : validateForm.name.$error.required && !validateForm.name.$pristine }">
+            <label for="name" class="col-sm-2 control-label">Nombre</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Introduce tu nombre" ng-model="validate.name" required>
+                <span ng-show="validateForm.name.$error.required && !validateForm.name.$pristine" class="help-block">Debes introducir un nombre.</span>
             </div>
-    
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : validateForm.apellido.$error.required && !validateForm.apellido.$pristine }">
+            <label for="apellido" class="col-sm-2 control-label">Apellido</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Introduce tu apellido" ng-model="validate.apellido" required>
+                <span ng-show="validateForm.apellido.$error.required && !validateForm.apellido.$pristine" class="help-block">Debes introducir tu apellido.</span>
+            </div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error' : validateForm.dni.$error.required && !validateForm.dni.$pristine }">
+            <label for="dni" class="col-sm-2 control-label">DNI</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="dni" name="dni" placeholder="Introduce tu DNI" ng-model="validate.dni" required>
+                <span ng-show="validateForm.dni.$error.required && !validateForm.dni.$pristine" class="help-block">Debes introducir un DNI.</span>
+            </div>
+        </div>
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="finalizarCompra()">Realizar compra</button>
+    <button type="button" class="btn btn-success" data-dismiss="modal" ng-disabled="validateForm.$invalid" ng-click="finalizarCompra()">Realizar compra</button>
 </div>
   
