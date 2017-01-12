@@ -77,8 +77,7 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 		['$scope','$uibModalInstance', 'evento',
 		function($scope, $uibModalInstance, evento){
 			$scope.evento = evento;
-			console.log($scope.evento);
-
+			
 			$scope.range = function(min, max, step) {
 				   step = step || 1;
 				   var input = [];
@@ -90,18 +89,11 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 
 			$scope.cancel = function(){
 				$uibModalInstance.dismiss('cancel');
-			}
+			};
 
-			$scope.finalizarCompra = function () {
-    			$uibModalInstance.close();
+			$scope.validarFormulario = function(){
+				$uibModalInstance.close();
     		};
-
-    		$scope.submitForm= function(){
-    			if($scope.validationForm.$valid){
-    				alert('falta algo');
-    			}
-    		}
-
 	
 		}])
 

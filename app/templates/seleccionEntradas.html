@@ -3,8 +3,9 @@
     <button type="button" class="close" data-dismiss="modal"  ng-click="cancel()">&times;</button>
     <h4 class="modal-title">Selección entradas</h4>
 </div>
-<div class="modal-body">
-   <form class="form-horizontal" name="validateForm" ng-submit="submitForm()">
+
+<form class="form-horizontal" name="validateForm" ng-submit="validarFormulario()" novalidate>
+    <div class="modal-body">
         <div class=" form-group">
     		<label for="selectorEntradas" class="col-sm-2 control-label">Entradas </label>
     		<div class="col-sm-10">
@@ -17,7 +18,7 @@
             <label for="name" class="col-sm-2 control-label">Nombre</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="name" name="name" placeholder="Introduce tu nombre" ng-model="validate.name" required>
-                <span ng-show="validateForm.name.$error.required && !validateForm.name.$pristine" class="help-block">Debes introducir un nombre.</span>
+                <span ng-show="validateForm.name.$error.required && !validateForm.name.$pristine " class="help-block">Debes introducir tu nombre.</span>
             </div>
         </div>
         <div class="form-group" ng-class="{ 'has-error' : validateForm.apellido.$error.required && !validateForm.apellido.$pristine }">
@@ -31,12 +32,13 @@
             <label for="dni" class="col-sm-2 control-label">DNI</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" id="dni" name="dni" placeholder="Introduce tu DNI" ng-model="validate.dni" required>
-                <span ng-show="validateForm.dni.$error.required && !validateForm.dni.$pristine" class="help-block">Debes introducir un DNI.</span>
+                <span ng-show="validateForm.dni.$error.required && !validateForm.dni.$pristine" class="help-block">Debes introducir tu DNI.</span>
             </div>
         </div>
-    </form>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-success" data-dismiss="modal" ng-disabled="validateForm.$invalid" ng-click="finalizarCompra()">Realizar compra</button>
-</div>
-  
+   
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-disabled="validateForm.$invalid" >Realizar compra</button>
+    </div>
+</form>
+
