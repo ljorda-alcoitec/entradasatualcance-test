@@ -39,6 +39,16 @@ angular.module('eventos', ['ui.router', 'ngResource','eventos.controllers', 'eve
 		}
 	});
 
+	$stateProvider.state('informes', {
+		url:'/informes/',
+		views: {
+			'content': {
+				templateUrl : 'templates/informes.html',
+				controller  : 'InformesController'
+			}
+		}
+	});
+
 	$urlRouterProvider.otherwise('/eventos/');
 })
 ;

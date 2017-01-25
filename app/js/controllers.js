@@ -120,4 +120,65 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 
 	}])
 
-;
+	.controller('InformesController', 
+				['$scope','tokenFactory','ordersFactory','$filter',
+		function($scope, tokenFactory, ordersFactory, $filter){
+		
+			tokenFactory.getSessionAndCall(loadOrders);
+
+			function loadOrders(){
+				ordersFactory.getOrders().then(
+					function(responseOk){
+						$scope.listaOrders = responseOk.data;
+						obtenerArrayEventosAgrupadosPorId();
+					},
+					function(responseError){
+
+					});
+			};
+
+		function obtenerArrayEventosAgrupadosPorId(){
+		
+			$scope.listaEventosAgrupadosPorId = [];
+			
+			angular.forEach($scope.listaOrders, function(lines){
+				angular.forEach(lines.lines, function (ticket) {
+					if(typeof $scope.listaEventosAgrupadosPorId != "undefined" && $scope.listaEventosAgrupadosPorId != null && $scope.listaEventosAgrupadosPorId.length > 0){
+						var indice =arrayObjectIndexOf($scope.listaEventosAgrupadosPorId, ticket.ticket.event.id);
+						if (indice == null){
+							anyadirEventoAlListadoOrdenado(ticket);
+						}else{
+							$scope.listaEventosAgrupadosPorId[indice].quantity += ticket.quantity;
+						}
+					}else{
+						anyadirEventoAlListadoOrdenado(ticket);
+					}
+				});
+			});
+			console.log($scope.listaEventosAgrupadosPorId)
+		};
+
+		function anyadirEventoAlListadoOrdenado(ticket){
+			$scope.listaEventosAgrupadosPorId.push({
+				id: ticket.ticket.event.id,
+				name: ticket.ticket.event.name,
+				price: ticket.ticket.price,
+				quantity: ticket.quantity,
+				date: ticket.ticket.event.date,
+				description: ticket.ticket.event.description
+			});
+		};
+
+		function arrayObjectIndexOf(array, obj){
+ 			for (var i = 0; i<array.length; i++) {
+ 				console.log("entro en el for " + i);
+      			if (array[i].id === obj) {
+      				console.log( "indice i " + i);
+        			return i;
+     		 	}
+			}
+			return null;
+     	}
+	}])
+				
+

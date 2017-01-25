@@ -92,4 +92,15 @@ angular.module('eventos.services', ['ngResource'])
 		return eventosFactory;
 	}
 ])
+
+.factory('ordersFactory', 
+			['$http','baseURL', 'tokenFactory',
+	function($http, baseURL, tokenFactory){
+		var ordersFactory = {};
+
+		ordersFactory.getOrders = function(){
+			return $http.get(baseURL+'orders?access_token=' + tokenFactory.access_token);
+		}
+return ordersFactory;
+	}])
 ;
