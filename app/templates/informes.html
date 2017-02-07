@@ -10,8 +10,8 @@
 	</div>
 
 	<div class="row row-content">
-		<div class="col-sm-2">Quantity</div>
-	 		<div ng-repeat="evento in listaEventosAgrupadosPorId">
+		<div class="col-sm-2">Con filtro creado</div>
+	 		<div ng-repeat="evento in listaEventosOrder | agruparPorID">
 	 			evento: {{evento.id}}
 	 			cantidad: {{evento.quantity}}
 	 		</div>

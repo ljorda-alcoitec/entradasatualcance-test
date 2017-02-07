@@ -130,6 +130,7 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 				ordersFactory.getOrders().then(
 					function(responseOk){
 						$scope.listaOrders = responseOk.data;
+						getArrayEventosOrder();
 						obtenerArrayEventosAgrupadosPorId();
 					},
 					function(responseError){
@@ -137,37 +138,53 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 					});
 			};
 
-		function obtenerArrayEventosAgrupadosPorId(){
-		
-			$scope.listaEventosAgrupadosPorId = [];
+		function getArrayEventosOrder(){
+			
+			$scope.listaEventosOrder = [];
 			
 			angular.forEach($scope.listaOrders, function(lines){
 				angular.forEach(lines.lines, function (ticket) {
-					if(typeof $scope.listaEventosAgrupadosPorId != "undefined" && $scope.listaEventosAgrupadosPorId != null && $scope.listaEventosAgrupadosPorId.length > 0){
-						var indice =arrayObjectIndexOf($scope.listaEventosAgrupadosPorId, ticket.ticket.event.id);
-						if (indice == null){
-							anyadirEventoAlListadoOrdenado(ticket);
-						}else{
-							$scope.listaEventosAgrupadosPorId[indice].quantity += ticket.quantity;
-						}
+					if(typeof $scope.listaOrders != "undefined" 
+							&& $scope.listaOrders != null 
+							&& $scope.listaOrders.length > 0){
+							$scope.listaEventosOrder.push({
+							id: ticket.ticket.event.id,
+							name: ticket.ticket.event.name,
+							price: ticket.ticket.price,
+							quantity: ticket.quantity,
+							date: ticket.ticket.event.date,
+							description: ticket.ticket.event.description
+						});
 					}else{
-						anyadirEventoAlListadoOrdenado(ticket);
+						console.log("El listado de Orders esta vacio");
 					}
 				});
 			});
-			console.log($scope.listaEventosAgrupadosPorId)
-		};
+		}
+		
+	}])
 
-		function anyadirEventoAlListadoOrdenado(ticket){
-			$scope.listaEventosAgrupadosPorId.push({
-				id: ticket.ticket.event.id,
-				name: ticket.ticket.event.name,
-				price: ticket.ticket.price,
-				quantity: ticket.quantity,
-				date: ticket.ticket.event.date,
-				description: ticket.ticket.event.description
+	.filter('agruparPorID', function(){
+		return _.memoize(function(listadoParaAgrupar){
+			var listadoAgrupado = [];
+			console.log("He entrado en el filtro");
+			angular.forEach(listadoParaAgrupar, function(evento){
+				var indice =arrayObjectIndexOf(listadoAgrupado, evento.id);
+				if (indice == null){
+					listadoAgrupado.push({
+						id: evento.id,
+						name: evento.name,
+						price: evento.price,
+						quantity: evento.quantity,
+						date: evento.date,
+						description: evento.description
+					});
+				}else{
+					listadoAgrupado[indice].quantity += evento.quantity;
+				}
 			});
-		};
+			return listadoAgrupado;
+		});
 
 		function arrayObjectIndexOf(array, obj){
  			for (var i = 0; i<array.length; i++) {
@@ -179,6 +196,10 @@ angular.module('eventos.controllers', ['ngAnimate','ui.bootstrap'])
 			}
 			return null;
      	}
-	}])
+
+	})
+
+
+
 				
 
